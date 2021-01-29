@@ -20,6 +20,7 @@ class LearnableBias(nn.Module):
         return input + self.bias.expand_as(input)
 
 class RPReLU(nn.Module):
+    # RPReLU is a PReLU sandwitched by learnable biases
     def __init__(self, in_channels):
         super(RPReLU, self).__init__()
         self.shift_x = LearnableBias(in_channels)
@@ -33,6 +34,7 @@ class RPReLU(nn.Module):
         return input
 
 class RSign(nn.Module):
+    # RSign is a Sign function that shifts the inputs
     def __init__(self, in_channels):
         super(RSign, self).__init__()
         self.shift_x = LearnableBias(in_channels)

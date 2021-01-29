@@ -19,6 +19,7 @@ import argparse
 
 #########################
 # parameters 
+# TODO: Add the parameters to argument parser
 
 batch_size = 128
 num_epoch = 250

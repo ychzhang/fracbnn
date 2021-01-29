@@ -50,6 +50,11 @@ class LambdaLayer(nn.Module):
         return self.lambd(x)
 
 class BasicBlock(nn.Module):
+    '''
+    Proposed ReActNet model variant.
+    For details, please refer to our paper:
+        https://arxiv.org/abs/2012.12206
+    '''
     expansion = 1
 
     def __init__(self, in_planes, planes, stride=1):
