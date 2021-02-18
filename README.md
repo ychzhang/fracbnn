@@ -1,6 +1,7 @@
 # fracbnn [![DOI](https://zenodo.org/badge/327196438.svg)](https://zenodo.org/badge/latestdoi/327196438)
 
-Code in this repo is for reproducing the results in the paper "FracBNN: Accurate and FPGA-Efficient Binary Neural Networks with Fractional Activations".
+Code in this repo is for reproducing the results in the paper [FracBNN: Accurate and FPGA-Efficient Binary Neural Networks with Fractional Activations](https://arxiv.org/abs/2012.12206).
+
 
 ## Structure
 ```
@@ -33,10 +34,10 @@ First, make sure to import the right model. This can be done by choosing the ```
 
 #### Train: Two-Step Training:
 - Step 1: Binary activations, floating-point weights.
-    - Use ```self.binarize = nn.Sequential()``` in ```BinaryConv2d()``` or ```PGBinaryConv2d()``` in ```utils/quantization.py```.
+    - In ```utils/quantization.py```, use ```self.binarize = nn.Sequential()``` in ```BinaryConv2d()```, or modify ```self.binarize(self.weight)``` to ```self.weight``` in ```PGBinaryConv2d()```.
     - Run ```python cifar10.py -gpu 0 -s```
 - Step 2: Binary activations, binary weights.
-    - Use ```self.binarize = FastSign()``` in ```BinaryConv2d()``` or ```PGBinaryConv2d()``` in ```utils/quantization.py```.
+    - In ```utils/quantization.py```, use ```self.binarize = FastSign()``` in ```BinaryConv2d()```, or ```self.binarize(self.weight)``` in ```PGBinaryConv2d()```.
     - Run ```python cifar10.py -gpu 0 -f -r /path/to/model_checkpoint.pt -s```
 
 ## Results
