@@ -1,6 +1,8 @@
 # fracbnn [![DOI](https://zenodo.org/badge/327196438.svg)](https://zenodo.org/badge/latestdoi/327196438)
 
-Code in this repo is for reproducing the results in the paper [FracBNN: Accurate and FPGA-Efficient Binary Neural Networks with Fractional Activations](https://arxiv.org/abs/2012.12206).
+Code in this repo is for artifact evaluation of the paper [FracBNN: Accurate and FPGA-Efficient Binary Neural Networks with Fractional Activations](https://arxiv.org/abs/2012.12206).
+
+**For the official code and pre-trained model release, please refer to our repository:** [cornell-zhang/FracBNN](https://github.com/cornell-zhang/FracBNN).
 
 
 ## Structure
