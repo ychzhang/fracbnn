@@ -167,26 +167,29 @@ class PGBinaryConv2d(nn.Conv2d):
         self.num_out = torch.zeros(1)
         ''' number of output features computed at high precision '''
         self.num_high = torch.zeros(1)
+        
+        self.bias1 = LearnableBias(in_channels)
+        self.bias2 = LearnableBias(in_channels)
 
     def forward(self, input):
-        ''' MSB convolution '''
-        out_msb = F.conv2d(self.binarize(input),
+        ''' One convolution branch'''
+        out_msb = F.conv2d(self.binarize(self.bias1(input)),
                            self.binarize(self.weight),
                            self.bias, self.stride, self.padding,
-                           self.dilation, self.groups) * 2.0 / 3.0
+                           self.dilation, self.groups)
         ''' Calculate the mask '''
         # TODO: check whether the .detach() here decrease the accuracy
         mask = self.gt(torch.sigmoid(5.0*(out_msb-self.threshold)), 0.5)
         ''' update report '''
         self.num_out.fill_( mask.numel() )
         self.num_high.fill_( (mask>0).sum().item() )
-        ''' full convolution '''
-        out_full = F.conv2d(input,
+        ''' The other convolution branch'''
+        out_full = F.conv2d(self.binarize(self.bias2(input)),
                            self.binarize(self.weight),
                            self.bias, self.stride, self.padding,
                            self.dilation, self.groups)
         ''' combine outputs '''
-        return (1-mask) * out_msb + mask * out_full
+        return out_msb + mask * out_full
 
 
 ##########
